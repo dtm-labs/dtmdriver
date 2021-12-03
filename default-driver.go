@@ -24,6 +24,9 @@ func (d *defaultDriver) ParseServerMethod(url string) (svr string, method string
 	if sep == -1 {
 		return "", "", fmt.Errorf("bad url: '%s'. no '/' found", url)
 	}
+	if strings.Contains(url, "://") {
+		return "", "", fmt.Errorf("call dtmdriver.Use() before you use custom scheme for '%s'", url)
+	}
 	return url[:sep], url[sep:], nil
 }
 
