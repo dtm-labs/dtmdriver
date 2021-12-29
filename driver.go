@@ -8,7 +8,7 @@ type Driver interface {
 	RegisterGrpcResolver()
 	// RegisterGrpcService register dtm endpoint to target
 	RegisterGrpcService(target string, endpoint string) error
-	// ParseServerMethod parse the uri to server and method.
+	// ParseServerMethod parse the url to server and method.
 	// server will be passed to grpc.Dial, and method to grpc.ClientConn.invoke
 	ParseServerMethod(uri string) (server string, method string, err error)
 }
