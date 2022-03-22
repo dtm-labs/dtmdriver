@@ -1,2 +1,2 @@
 # dtmdriver
-dtm接入gRPC类微服务接口
+dtm's driver interface for micro-services
