@@ -3,26 +3,26 @@ package dtmdriver
 import "fmt"
 
 var (
-	drivers = map[string]Driver{}
-	current Driver
+	grpcDrivers = map[string]Driver{}
+	grpcCurrent Driver
 )
 
 // Register used by each driver writer to register the driver to system
 func Register(driver Driver) {
-	drivers[driver.GetName()] = driver
+	grpcDrivers[driver.GetName()] = driver
 }
 
 // Use called by users who want to use dtmgrpc.
 func Use(name string) error {
-	v := drivers[name]
+	v := grpcDrivers[name]
 	if v == nil {
 		return fmt.Errorf("no dtm driver with name: %s has been registered", name)
 	}
-	if current != nil && v != current {
-		return fmt.Errorf("use has been called previously with name: %s different from: %s", current.GetName(), name)
+	if grpcCurrent != nil && v != grpcCurrent {
+		return fmt.Errorf("use has been called previously with name: %s different from: %s", grpcCurrent.GetName(), name)
 	}
-	if current == nil {
-		current = v
+	if grpcCurrent == nil {
+		grpcCurrent = v
 		v.RegisterGrpcResolver()
 	}
 	return nil
@@ -30,8 +30,8 @@ func Use(name string) error {
 
 // GetDriver called by dtm
 func GetDriver() Driver {
-	if current == nil {
-		return drivers["default"]
+	if grpcCurrent == nil {
+		return grpcDrivers["default"]
 	}
-	return current
+	return grpcCurrent
 }

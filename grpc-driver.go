@@ -1,6 +1,6 @@
 package dtmdriver
 
-// Driver interface to do service register and discover
+// Driver is the interface to do grpc service register and discover
 type Driver interface {
 	// GetName return the name of the driver
 	GetName() string
