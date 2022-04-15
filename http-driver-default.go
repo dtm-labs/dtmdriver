@@ -38,6 +38,8 @@ func (d *defaultHTTPClient) RegisterService(target string, endpoint string) erro
 
 func init() {
 	defaultDriver := &defaultHTTPDriver{}
+	log.Printf("package init called")
 	_ = defaultDriver.Init("", "", "") // default driver init need no params
+	log.Printf("defaultDriver.Init called, defaultDriver.client: %v", defaultDriver.client)
 	RegisterHttp(&defaultHTTPDriver{})
 }
