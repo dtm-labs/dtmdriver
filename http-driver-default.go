@@ -1,20 +1,38 @@
 package dtmdriver
 
-type defaultHttpDriver struct {
+type defaultHTTPDriver struct {
+	client HTTPClient
 }
 
-func (d *defaultHttpDriver) GetName() string {
+func (d *defaultHTTPDriver) GetName() string {
 	return "default"
 }
 
-func (d *defaultHttpDriver) ResolveHttpURL(url string) (string, error) {
+func (d *defaultHTTPDriver) Init(registryType string, host string, options string) error {
+	d.client = &defaultHTTPClient{}
+	return nil
+}
+
+func (d *defaultHTTPDriver) ResolveURL(url string) (string, error) {
+	return d.client.ResolveURL(url)
+}
+
+func (d *defaultHTTPDriver) RegisterService(target string, endpoint string) error {
+	return d.client.RegisterService(target, endpoint)
+}
+
+type defaultHTTPClient struct{}
+
+func (d *defaultHTTPClient) ResolveURL(url string) (string, error) {
 	return url, nil
 }
 
-func (d *defaultHttpDriver) RegisterHttpService(target string, endpoint string) error {
+func (d *defaultHTTPClient) RegisterService(target string, endpoint string) error {
 	return nil
 }
 
 func init() {
-	RegisterHttp(&defaultHttpDriver{})
+	defaultDriver := &defaultHTTPDriver{}
+	RegisterHttp(&defaultHTTPDriver{})
+	defaultDriver.Init("", "", "") // default driver init need no params
 }

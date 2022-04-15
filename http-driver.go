@@ -1,11 +1,21 @@
 package dtmdriver
 
-// HttpDriver is the interface to do http service register and discover
-type HttpDriver interface {
+// HTTPDriver is the interface to do http service register and discover
+type HTTPDriver interface {
 	// GetName return the name of the driver
 	GetName() string
-	// ResolveHttpURL register the http resolver to handle custom url
-	ResolveHttpURL(url string) (string, error)
-	// RegisterHttpService register dtm endpoint to target
-	RegisterHttpService(target string, endpoint string) error
+	// Init will init client
+	Init(registryType string, host string, options string) error
+	// ResolveURL register the http resolver to handle custom url
+	ResolveURL(url string) (string, error)
+	// RegisterService register dtm endpoint to service
+	RegisterService(service string, endpoint string) error
+}
+
+// HTTPClient is the interface to do http service call.
+type HTTPClient interface {
+	// ResolveURL register the http resolver to handle custom url
+	ResolveURL(url string) (string, error)
+	// RegisterService register dtm endpoint to service
+	RegisterService(service string, endpoint string) error
 }
