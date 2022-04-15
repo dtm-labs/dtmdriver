@@ -1,7 +1,5 @@
 package dtmdriver
 
-import "log"
-
 type defaultHTTPDriver struct {
 	client HTTPClient
 }
@@ -16,9 +14,6 @@ func (d *defaultHTTPDriver) Init(registryType string, host string, options strin
 }
 
 func (d *defaultHTTPDriver) ResolveURL(url string) (string, error) {
-	log.Printf("d: %v", d)
-	log.Printf("d.client: %v", d.client)
-	log.Printf("d.client.ResolveURL: %v", d.client.ResolveURL)
 	return d.client.ResolveURL(url)
 }
 
@@ -38,8 +33,6 @@ func (d *defaultHTTPClient) RegisterService(target string, endpoint string) erro
 
 func init() {
 	defaultDriver := &defaultHTTPDriver{}
-	log.Printf("package init called")
 	_ = defaultDriver.Init("", "", "") // default driver init need no params
-	log.Printf("defaultDriver.Init called, defaultDriver.client: %v", defaultDriver.client)
-	RegisterHttp(&defaultHTTPDriver{})
+	RegisterHttp(defaultDriver)
 }
