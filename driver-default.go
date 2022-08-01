@@ -12,10 +12,10 @@ func (d *defaultDriver) GetName() string {
 	return "default"
 }
 
-func (d *defaultDriver) RegisterGrpcResolver() {
+func (d *defaultDriver) RegisterAddrResolver() {
 }
 
-func (d *defaultDriver) RegisterGrpcService(target string, endpoint string) error {
+func (d *defaultDriver) RegisterService(target string, endpoint string) error {
 	return nil
 }
 
